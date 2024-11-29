@@ -17,18 +17,23 @@ class MonsterFactory{
         console.log(`Description: ${this.description}`);
     }
 }
-
+module.exports = { createMonster };
 async function createMonster(monster) {
     const monsterData = await monsterApi(monster);
-    {name,} = monsterData;
-    console.log(monsterData + "yup you got here indeed")
-    if (monsterData) {
-        console.log("got stuck in here")
-        const monsterInstance = new MonsterFactory(monsterData);
+
+    const monsterInfo = {
+        name: monsterData.name,
+        size: monsterData.size,
+        type: monsterData.type,
+        hp: monsterData.hit_points,
+        attack: monsterData.strength
+      };
+    if (monsterInfo) {
+        const monsterInstance = new MonsterFactory(monsterInfo);
+        monsterInstance.displayInfo();
         return monsterInstance;
     } else {
         console.error("Failed to create monster instance. No data available.");
         return null;
     }
 }
-createMonster("aboleth");

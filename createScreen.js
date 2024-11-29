@@ -1,5 +1,5 @@
-const { createMonster } = require('./monsterFactory.js');
-
+// const { createMonster } = require('./monsterFactory.js');
+const meleeButton = document.querySelector('.melee');
 class createScreen{
     constructor(){
         this.enemy = null;
@@ -21,14 +21,17 @@ class createScreen{
         console.log("Aw, I got hurt! I have " + this.enemy.getHp() + " HP left!");
     }
 }
-
+const screen = new createScreen();
 async function main() {
-    const screen = new createScreen();
 
     // Wait for initialization to complete
     await new Promise(resolve => setTimeout(resolve, 1000)); // Adjust as needed
     screen.attackEnemy();
     screen.attackEnemy();
 }
+meleeButton.addEventListener('click', () => {
+    console.log("Melee button clicked!");
+    screen.attackEnemy();
+});
 
 main();

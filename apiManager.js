@@ -26,4 +26,4 @@ async function monsterApi(monster) {
 
 //dndApiConnection(class_url);
 // monsterApi("aboleth");
-module.exports = { monsterApi };
+//module.exports = { monsterApi };

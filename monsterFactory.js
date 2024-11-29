@@ -1,4 +1,4 @@
-const { monsterApi } = require('./apiManager');
+// const { monsterApi } = require('./apiManager');
 class MonsterFactory{
     constructor(monsterData){
         this.name = monsterData.name || "Unknown Monster";
@@ -23,7 +23,7 @@ class MonsterFactory{
         this.hp = this.hp - damage;
     }
 }
-module.exports = { createMonster };
+// module.exports = { createMonster };
 async function createMonster(monster) {
     const monsterData = await monsterApi(monster);
 

@@ -16,6 +16,12 @@ class MonsterFactory{
         console.log(`Defense: ${this.defense}`);
         console.log(`Description: ${this.description}`);
     }
+    getHp(){
+        return this.hp
+    }
+    setHp(damage){
+        this.hp = this.hp - damage;
+    }
 }
 module.exports = { createMonster };
 async function createMonster(monster) {

@@ -16,7 +16,7 @@ async function monsterApi(monster) {
     try{
         const monsterDatabase = await fetch(`${monsters_url}/${monster}`);
         const monsterInfo = await monsterDatabase.json();
-        console.log(monsterInfo);
+        // console.log(monsterInfo);
         return monsterInfo
     }
     catch (error) {

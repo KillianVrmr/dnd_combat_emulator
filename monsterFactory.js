@@ -5,6 +5,7 @@ class MonsterFactory{
         this.type = monsterData.type || "Unknown Type";
         this.image =  monsterData.image;
         this.hp = monsterData.hp || 1;
+        this.MaxHp = monsterData.hp || 1;
         this.attack = monsterData.attack || 0;
         this.defense = monsterData.defense || 0;
         this.description = monsterData.description || "No description available.";
@@ -19,6 +20,9 @@ class MonsterFactory{
     }
     getHp(){
         return this.hp
+    }
+    getMaxHp(){
+        return this.MaxHp
     }
     setHp(newHp){
         this.hp = newHp;

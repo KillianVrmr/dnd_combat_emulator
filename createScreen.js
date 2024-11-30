@@ -60,9 +60,26 @@ class createScreen{
         if(this.enemy.getHp()>=0){
 
         this.enemy.setHp(this.enemy.getHp()-damage);
-        console.log("Aw, I got hurt! I have " + this.enemy.getHp() + " HP left!");
+        const healthPercentage = (this.enemy.getHp() / this.enemy.getMaxHp()) * 100;
+        this.updateHealthBar()
+        console.log("Aw, I got hurt! I have " + this.enemy.getHp() + " HP left!"+ this.enemy.getMaxHp());
         }
         else{ console.log("i am already dead please stop")}}
+    }
+    async updateHealthBar() {
+        const healthPercentage = Math.max(0, Math.min(100, (this.enemy.currentHp / this.enemy.maxHp) * 100));
+        
+        const healthBarProgress = document.getElementById("health_bar_progress");
+        const healthBarText = document.getElementById("health_bar_text");
+
+        // Simulate asynchronous delay (optional, for demonstration)
+        await new Promise(resolve => setTimeout(resolve, 50)); // Simulated delay
+        
+        // Update progress bar width
+        if (healthBarProgress) healthBarProgress.style.width = healthPercentage + "%";
+
+        // Update overlay text
+        if (healthBarText) healthBarText.innerHTML = `${this.enemy.currentHp} / ${this.enemy.maxHp}`;
     }
 }
 const screen = new createScreen();

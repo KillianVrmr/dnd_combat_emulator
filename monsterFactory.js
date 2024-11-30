@@ -3,6 +3,7 @@ class MonsterFactory{
     constructor(monsterData){
         this.name = monsterData.name || "Unknown Monster";
         this.type = monsterData.type || "Unknown Type";
+        this.image =  monsterData.image;
         this.hp = monsterData.hp || 1;
         this.attack = monsterData.attack || 0;
         this.defense = monsterData.defense || 0;
@@ -19,8 +20,8 @@ class MonsterFactory{
     getHp(){
         return this.hp
     }
-    setHp(damage){
-        this.hp = this.hp - damage;
+    setHp(newHp){
+        this.hp = newHp;
     }
 }
 // module.exports = { createMonster };
@@ -30,6 +31,7 @@ async function createMonster(monster) {
     const monsterInfo = {
         name: monsterData.name,
         size: monsterData.size,
+        image: "./images/" + monsterData.name+ ".jpg",
         type: monsterData.type,
         hp: monsterData.hit_points,
         attack: monsterData.strength

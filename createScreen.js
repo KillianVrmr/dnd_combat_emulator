@@ -15,13 +15,18 @@ const availableMonsters = [
     "marilith", 
     "quasit", 
     "drider"]
+
 class createScreen{
     constructor(){
         this.enemy = null;
-        this.allie = [];
+        this.allie = null;
         const random_monster = availableMonsters[Math.floor(Math.random() * 9)]
-        console.log(random_monster)
+        console.log(random_monster);
         this.initEnemy(random_monster);
+        this.initAllie();
+    }
+    initAllie(){
+        this.allie = createAllie()
     }
     async initEnemy(name) {
         this.enemy = await createMonster(name); // Wait for the promise to resolve
@@ -39,18 +44,19 @@ class createScreen{
     })
     .catch((error) => console.log('Error fetching file:', error));
         //document.getElementById("enemy_img").src = this.enemy.image;
-        document.getElementById("health_bar").textContent = this.enemy.hp;
         document.getElementById("enemy_descr").textContent = this.enemy.description;
     }
+
     async setEnemyImg(){
         document.getElementById("enemy_img").src = this.enemy.image;
-        const bannerImage = document.getElementById('enemy_imge');
+        const bannerImage = document.getElementById('enemy_img');
         bannerImage.innerHTML = `
             <div class="enemy_img"> 
-            <img src="${this.enemy.image}">
+            <img src="${this.enemy.image}" width="500" height="600">
             </div>
             `
     }
+
     async attackEnemy(damage) {
         if (!this.enemy) {
             console.log("Enemy is not ready yet. Please wait...");
@@ -66,8 +72,9 @@ class createScreen{
         }
         else{ console.log("i am already dead please stop")}}
     }
+
     async updateHealthBar() {
-        const healthPercentage = Math.max(0, Math.min(100, (this.enemy.currentHp / this.enemy.maxHp) * 100));
+        const healthPercentage = Math.max(0, Math.min(100, (this.enemy.getHp() / this.enemy.getMaxHp()) * 100));
         
         const healthBarProgress = document.getElementById("health_bar_progress");
         const healthBarText = document.getElementById("health_bar_text");
@@ -76,10 +83,11 @@ class createScreen{
         await new Promise(resolve => setTimeout(resolve, 50)); // Simulated delay
         
         // Update progress bar width
+        console.log(healthPercentage)
         if (healthBarProgress) healthBarProgress.style.width = healthPercentage + "%";
 
         // Update overlay text
-        if (healthBarText) healthBarText.innerHTML = `${this.enemy.currentHp} / ${this.enemy.maxHp}`;
+        if (healthBarText) healthBarText.innerHTML = `${this.enemy.getHp()} / ${this.enemy.getMaxHp()}`;
     }
 }
 const screen = new createScreen();

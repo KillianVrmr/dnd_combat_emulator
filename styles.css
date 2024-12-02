@@ -1,0 +1,107 @@
+/* General Body Style */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a; /* Dark gray background */
+    color: #f5f5dc; /* Light beige text for contrast */
+    font-family: 'Cinzel', serif; /* Fantasy-like font */
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Import Fantasy Vibes Font */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Uncial+Antiqua&display=swap');
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
+    color: #d4af37; /* Gold color for headings */
+    text-shadow: 1px 1px 3px #000; /* Subtle shadow for dramatic effect */
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+button {
+    background-color: #333; /* Darker button background */
+    color: #d4af37; /* Gold text */
+    border: 2px solid #d4af37; /* Gold border */
+    padding: 10px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    text-transform: uppercase; /* Give it an epic look */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    outline: none;
+}
+
+button:hover {
+    background-color: #d4af37; /* Gold background on hover */
+    color: #333; /* Dark text on hover */
+}
+
+/* Links */
+a {
+    color: #d4af37;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #f1c232; /* Brighter gold on hover */
+}
+
+/* Containers */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Cards or Panels */
+.panel {
+    background-color: #222; /* Slightly lighter than body background */
+    padding: 20px;
+    border: 1px solid #444; /* Subtle border */
+    border-radius: 0; /* No rounded edges */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6); /* A bit of depth */
+    margin-bottom: 20px;
+    color: #f5f5dc; /* Light text color */
+}
+
+/* Inputs */
+input, textarea {
+    background-color: #333;
+    color: #f5f5dc;
+    border: 1px solid #444;
+    padding: 10px;
+    font-family: 'Cinzel', serif;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Progress Bars */
+.progress-bar {
+    background-color: #444; /* Dark gray background */
+    border: 1px solid #d4af37; /* Gold border */
+    position: relative;
+    height: 30px;
+    width: 100%;
+}
+
+.progress-bar-inner {
+    background-color: #d4af37; /* Gold color for progress */
+    height: 100%;
+    width: 50%; /* Dynamic width */
+    text-align: center;
+    line-height: 30px;
+    color: #1a1a1a; /* Dark text inside the bar */
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    color: #666;
+    font-size: 14px;
+}

@@ -35,7 +35,7 @@ async function createMonster(monster) {
     const monsterInfo = {
         name: monsterData.name,
         size: monsterData.size,
-        image: "./images/" + monsterData.name+ ".jpg",
+        image: "./images/monsters/" + monsterData.name+ ".jpg",
         type: monsterData.type,
         hp: monsterData.hit_points,
         attack: monsterData.strength

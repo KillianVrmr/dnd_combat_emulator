@@ -1,3 +1,5 @@
+/* Import Fantasy Vibes Font */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Uncial+Antiqua&display=swap');
 /* General Body Style */
 body {
     margin: 0;
@@ -9,8 +11,7 @@ body {
     line-height: 1.6;
 }
 
-/* Import Fantasy Vibes Font */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Uncial+Antiqua&display=swap');
+
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
@@ -19,7 +20,15 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 1px 1px 3px #000; /* Subtle shadow for dramatic effect */
     margin-bottom: 20px;
 }
-
+#arena {
+    display: flex; /* Use flexbox layout */
+    padding: 10px; /* Optional padding */
+    gap: 10px; /* Optional spacing between divs */
+    min-height: 600px;
+}
+#enemy_corner, #ally_corner{
+    flex: 1;
+}
 /* Buttons */
 button {
     background-color: #333; /* Darker button background */

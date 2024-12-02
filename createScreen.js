@@ -19,14 +19,14 @@ const availableMonsters = [
 class createScreen{
     constructor(){
         this.enemy = null;
-        this.allie = null;
+        this.ally = null;
         const random_monster = availableMonsters[Math.floor(Math.random() * 9)]
         console.log(random_monster);
         this.initEnemy(random_monster);
-        this.initAllie();
+        this.initAlly();
     }
-    initAllie(){
-        this.allie = createAllie()
+    initAlly(){
+        this.ally = createAlly()
     }
     async initEnemy(name) {
         this.enemy = await createMonster(name); // Wait for the promise to resolve
@@ -48,11 +48,18 @@ class createScreen{
     }
 
     async setEnemyImg(){
-        document.getElementById("enemy_img").src = this.enemy.image;
         const bannerImage = document.getElementById('enemy_img');
         bannerImage.innerHTML = `
             <div class="enemy_img"> 
-            <img src="${this.enemy.image}" width="500" height="600">
+            <img src="${this.enemy.image}" width="250" height="300">
+            </div>
+            `
+    }
+    async setAllyImg(){
+        const bannerImage = document.getElementById('ally_img');
+        bannerImage.innerHTML = `
+            <div class="ally_img"> 
+            <img src="${this.ally.image}" width="250" height="300">
             </div>
             `
     }
@@ -67,19 +74,35 @@ class createScreen{
 
         this.enemy.setHp(this.enemy.getHp()-damage);
         const healthPercentage = (this.enemy.getHp() / this.enemy.getMaxHp()) * 100;
-        this.updateHealthBar()
+        this.updateEnemyHealthBar()
+        this.attackAlly(2)
         console.log("Aw, I got hurt! I have " + this.enemy.getHp() + " HP left!"+ this.enemy.getMaxHp());
+        }
+        else{ console.log("i am already dead please stop")}}
+
+    }
+    async attackAlly(damage){
+        if (!this.ally) {
+            console.log("Enemy is not ready yet. Please wait...");
+            return;
+        }
+        else{
+        if(this.ally.getHp()>=0){
+
+        this.ally.setHp(this.ally.getHp()-damage);
+        const healthPercentage = (this.ally.getHp() / this.ally.getMaxHp()) * 100;
+        this.updateAllyHealthBar()
+        console.log("Aw, I got hurt! I have " + this.ally.getHp() + " HP left!"+ this.ally.getMaxHp());
         }
         else{ console.log("i am already dead please stop")}}
     }
 
-    async updateHealthBar() {
+    async updateEnemyHealthBar() {
         const healthPercentage = Math.max(0, Math.min(100, (this.enemy.getHp() / this.enemy.getMaxHp()) * 100));
         
-        const healthBarProgress = document.getElementById("health_bar_progress");
-        const healthBarText = document.getElementById("health_bar_text");
+        const healthBarProgress = document.getElementById("health_bar_progress_enemy");
+        const healthBarText = document.getElementById("health_bar_text_enemy");
 
-        // Simulate asynchronous delay (optional, for demonstration)
         await new Promise(resolve => setTimeout(resolve, 50)); // Simulated delay
         
         // Update progress bar width
@@ -89,15 +112,29 @@ class createScreen{
         // Update overlay text
         if (healthBarText) healthBarText.innerHTML = `${this.enemy.getHp()} / ${this.enemy.getMaxHp()}`;
     }
+    updateAllyHealthBar(){
+        const healthPercentage = Math.max(0, Math.min(100, ((this.ally.getHp()) / this.ally.getMaxHp()) * 100));
+        
+        const healthBarProgress = document.getElementById("health_bar_progress_ally");
+        const healthBarText = document.getElementById("health_bar_text_ally");
+
+       // new Promise(resolve => setTimeout(resolve, 50)); // Simulated delay
+        
+        // Update progress bar width
+        console.log(healthPercentage)
+        if (healthBarProgress) healthBarProgress.style.width = healthPercentage + "%";
+
+        // Update overlay text
+        if (healthBarText) healthBarText.innerHTML = `${this.ally.getHp()} / ${this.ally.getMaxHp()}`;
+    }
 }
 const screen = new createScreen();
 async function main() {
 
     // Wait for initialization to complete
     await new Promise(resolve => setTimeout(resolve, 2000)); // Adjust as needed
-    screen.attackEnemy(10);
-    screen.attackEnemy(20);
     screen.setEnemyImg();
+    screen.setAllyImg();
 }
 meleeButton.addEventListener('click', () => {
     console.log("Melee button clicked!");

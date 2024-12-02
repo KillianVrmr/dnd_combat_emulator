@@ -1,9 +1,10 @@
 class allyCreator{
-    constructor(name,hp,maxHp,attack){
-        this.name = name;
-        this.hp = hp;
-        this.maxHp = maxHp;
-        this.attack = attack;
+    constructor(allyInfo){
+        this.name = allyInfo.name;
+        this.hp = allyInfo.hp;
+        this.maxHp = allyInfo.hp;
+        this.image = allyInfo.image;
+        this.attack = allyInfo.attack;
     }
     setHp(newHp){
         this.hp = newHp
@@ -14,22 +15,32 @@ class allyCreator{
     getMaxHp(){
         return this.maxHp
     }
+    displayInfo(){
+        console.log(`Monster Name: ${this.name}`);
+        console.log(`Type: ${this.type}`);
+        console.log(`HP: ${this.hp}`);
+        console.log(`Attack: ${this.attack}`);
+        console.log(`Defense: ${this.defense}`);
+        console.log(`Description: ${this.description}`);
+    }
 }
-function createAllie(){
-    const allieInfo = {
+
+function createAlly(){
+    console.log("hey i am creating you ok")
+    const allyInfo = {
         name: "test",
         size: "average",
-        image: "./images/" + "allie"+ ".jpg",
-        type: monsterData.type,
-        hp: monsterData.hit_points,
-        attack: monsterData.strength
+        image: "./images/allys/" + "ally"+ ".jpg",
+        type: "no type",
+        hp: 55,
+        attack: 15
       };
-    if (monsterInfo) {
-        const monsterInstance = new MonsterFactory(monsterInfo);
-        monsterInstance.displayInfo();
-        return monsterInstance;
+    if (allyInfo) {
+        const allyInstance = new allyCreator(allyInfo);
+        allyInstance.displayInfo();
+        return allyInstance;
     } else {
-        console.error("Failed to create monster instance. No data available.");
+        console.error("Failed to create ally instance. No data available.");
         return null;
     }
 }

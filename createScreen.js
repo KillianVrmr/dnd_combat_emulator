@@ -134,26 +134,7 @@ class createScreen{
         console.log("Current enemies list:", this.enemies);
     }
     
-
-    async setEnemyImg(){
-        this.enemies.forEach(enemyImg => {
-            
-        });
-        const bannerImage = document.getElementById('enemy_img');
-        bannerImage.innerHTML = `
-            <div class="enemy_img"> 
-            <img src="${enemyImg.image}" width="250" height="300">
-            </div>
-            `
-    }
-    async setAllyImg(){
-        const bannerImage = document.getElementById('ally_img');
-        bannerImage.innerHTML = `
-            <div class="ally_img"> 
-            <img src="${this.ally.image}" width="250" height="300">
-            </div>
-            `
-    }
+    
 
     async attackEnemy(damage) {
         if (!this.enemy) {
@@ -226,13 +207,7 @@ class createScreen{
     }
 }
 const screen = new createScreen();
-async function main() {
 
-    // Wait for initialization to complete
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Adjust as needed
-    screen.setEnemyImg();
-    screen.setAllyImg();
-}
 meleeButton.addEventListener('click', () => {
     console.log("Melee button clicked!");
     screen.attackEnemy(7);
@@ -249,5 +224,3 @@ screamButton.addEventListener('click', () => {
     console.log("scream button clicked!");
     screen.attackEnemy(10);
 });
-
-//main();

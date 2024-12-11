@@ -1,6 +1,7 @@
 // const { monsterApi } = require('./apiManager');
 class MonsterFactory{
     constructor(monsterData){
+        this.id = monsterData.id;
         this.name = monsterData.name || "Unknown Monster";
         this.type = monsterData.type || "Unknown Type";
         this.image =  monsterData.image;
@@ -29,10 +30,11 @@ class MonsterFactory{
     }
 }
 // module.exports = { createMonster };
-async function createMonster(monster) {
+async function createMonster(monster,index) {
     const monsterData = await monsterApi(monster);
 
     const monsterInfo = {
+        id:index,
         name: monsterData.name,
         size: monsterData.size,
         image: "./images/monsters/" + monsterData.name+ ".jpg",

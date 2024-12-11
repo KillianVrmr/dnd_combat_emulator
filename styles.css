@@ -133,3 +133,6 @@ footer {
     flex-direction: column;      /* Stack contents vertically */
     align-items: center;         /* Center contents horizontally */
 }
+.selected {
+    border: 2px solid rgb(251, 0, 0);
+}

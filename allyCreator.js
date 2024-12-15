@@ -1,5 +1,6 @@
 class allyCreator{
     constructor(allyInfo){
+        this.id = allyInfo.id;
         this.name = allyInfo.name;
         this.hp = allyInfo.hp;
         this.maxHp = allyInfo.hp;
@@ -25,9 +26,10 @@ class allyCreator{
     }
 }
 
-function createAlly(){
+function createAlly(info){
     console.log("hey i am creating you ok")
     const allyInfo = {
+        id :info.id,
         name: "test",
         size: "average",
         image: "./images/allys/" + "ally"+ ".jpg",

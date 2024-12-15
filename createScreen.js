@@ -25,7 +25,7 @@ class createScreen{
             console.log(random_monster);
             this.initEnemy(random_monster,i)
         };
-        for(let i = 0;i<1;i++){
+        for(let i = 0;i<3;i++){
         this.initAlly(i);
         }
         this.rollInitiative();
@@ -71,7 +71,8 @@ class createScreen{
     }
     initAlly(index) {
         try {
-            const ally = createAlly(); // Call a method to create an ally
+            const allyinfo = {id: index}
+            const ally = createAlly(allyinfo); // Call a method to create an ally
             this.allies.push(ally); // Add to the allies array
     
             console.log("Your ally is: ", ally.name);
@@ -82,13 +83,13 @@ class createScreen{
     
             // Fill in the HTML structure
             allyContainer.innerHTML = `
-                <div class="ally_img">
+                <div class="ally_img${index}">
                     <img src="${ally.image}" alt="${ally.name}" style="max-width: 100%; height: auto;">
                 </div>
-                <div class="ally_name">${ally.name}</div>
-                <div class="health_bar_ally" style="width: 100%; background-color: #ccc; height: 30px; position: relative; border: 1px solid #000;">
-                    <div class="health_bar_progress_ally" style="width: 100%; background-color: green; height: 100%; position: absolute;"></div>
-                    <div class="health_bar_text_ally" style="position: absolute; width: 100%; height: 100%; text-align: center; line-height: 30px; color: white; font-weight: bold;">100%</div>
+                <div class="ally_name${index}">${ally.name}</div>
+                <div class="health_bar_ally${index}" style="width: 100%; background-color: #ccc; height: 30px; position: relative; border: 1px solid #000;">
+                    <div class="health_bar_progress_ally${index}" style="width: 100%; background-color: green; height: 100%; position: absolute;"></div>
+                    <div class="health_bar_text_ally${index}" style="position: absolute; width: 100%; height: 100%; text-align: center; line-height: 30px; color: white; font-weight: bold;">100%</div>
                 </div>
             `;
     
@@ -126,17 +127,26 @@ class createScreen{
             </div>
             <div class="enemy_descr${index}">${monster.description}</div>
         `;
-        enemyContainer.addEventListener("click", () => {
-            console.log("Variable changed to:")
-            myVariable = enemyContainer.getAttribute("index");
-    
-            // Remove 'selected' class from all divs
-    
-            // Add 'selected' class to the clicked div
-            enemyContainer.classList.add("selected");
-    
-            console.log("Variable changed to:", myVariable);
+
+        // Assuming "enemyContainer" is the parent container for dynamically created divs
+        enemyContainer.addEventListener("click", (event) => {
+            const clickedDiv = event.target;
+        
+            // Ensure it's an enemy-div or a child of an enemy-div that was clicked
+            if (clickedDiv.closest(".enemy_corner")) {
+                const targetDiv = clickedDiv.closest(".enemy_corner");
+        
+                // Remove 'selected' class from all divs
+                const arena = document.getElementById("arena");
+                const allDivs = arena.querySelectorAll(".enemy_corner");
+                allDivs.forEach(div => div.classList.remove("selected"));
+
+                targetDiv.classList.add("selected");
+                // Update myVariable
+                myVariable = targetDiv.getAttribute("index");
+            }
         });
+        
         // Append the new enemy container to a parent container
         const parentContainer = document.getElementById("enemies_container"); // Ensure this container exists in your HTML
         console.log(parentContainer)
@@ -162,35 +172,32 @@ class createScreen{
         element.setHp(element.getHp()-damage);
         const healthPercentage = (element.getHp() / element.getMaxHp()) * 100;
         this.updateEnemyHealthBar(element)
-        this.attackAlly(2)
+        this.enemyTurn(element)
+        
         console.log("Aw, I got hurt! I have " + element.getHp() + " HP left!"+element.getMaxHp());
-        setTimeout(2000);
-        document.getElementsByClassName("melee").item(0).style.display = "none";
-        document.getElementsByClassName("slash").item(0).style.display = "none";
-        document.getElementsByClassName("bash").item(0).style.display = "none";
-        document.getElementsByClassName("scream").item(0).style.display = "none";
-        }
+        setTimeout(() => {
+            document.getElementsByClassName("melee").item(0).style.display = "block";
+            document.getElementsByClassName("slash").item(0).style.display = "block";
+            document.getElementsByClassName("bash").item(0).style.display = "block";
+            document.getElementsByClassName("scream").item(0).style.display = "block";
+        }, 1000);}
         else{ console.log("i am already dead please stop")}}
        
         else{console.log("not found it"+ element.id, myVariable, element.name )}
         
         });
     }
-    async attackAlly(damage){
-        if (!this.ally) {
-            console.log("Enemy is not ready yet. Please wait...");
-            return;
-        }
-        else{
-        if(this.ally.getHp()>=0){
+    async attackAlly(damage,ally){
+        console.log(ally.getHp())
+        if(ally.getHp()>=0){
 
-        this.ally.setHp(this.ally.getHp()-damage);
-        const healthPercentage = (this.ally.getHp() / this.ally.getMaxHp()) * 100;
-        this.updateAllyHealthBar()
-        console.log("Aw, I got hurt! I have " + this.ally.getHp() + " HP left!"+ this.ally.getMaxHp());
+        ally.setHp(ally.getHp()-damage);
+        const healthPercentage = (ally.getHp() /ally.getMaxHp()) * 100;
+        this.updateAllyHealthBar(ally)
+        console.log("Aw, I got hurt! I have " + ally.getHp() + " HP left!"+ ally.getMaxHp());
         }
         else{ console.log("i am already dead please stop")}}
-    }
+    
 
     async updateEnemyHealthBar(unit) {
         const healthPercentage = Math.max(0, Math.min(100, (unit.getHp() / unit.getMaxHp()) * 100));
@@ -207,12 +214,12 @@ class createScreen{
         // Update overlay text
         if (healthBarText) healthBarText.innerHTML = `${unit.getHp()} / ${unit.getMaxHp()}`;
     }
-    updateAllyHealthBar(){
+    updateAllyHealthBar(unit){
         const healthPercentage = Math.max(0, Math.min(100, ((unit.getHp()) / unit.getMaxHp()) * 100));
         
-        const healthBarProgress = document.getElementById("health_bar_progress_ally");
-        const healthBarText = document.getElementById("health_bar_text_ally");
-
+        const healthBarProgress = document.getElementsByClassName(`health_bar_progress_ally${unit.id}`)[0];
+        const healthBarText = document.getElementsByClassName(`health_bar_text_ally${unit.id}`)[0];
+        console.log("ally health bar"+ healthBarProgress, healthBarText,unit.id)
        // new Promise(resolve => setTimeout(resolve, 50)); // Simulated delay
         
         // Update progress bar width
@@ -220,13 +227,16 @@ class createScreen{
         if (healthBarProgress) healthBarProgress.style.width = healthPercentage + "%";
 
         // Update overlay text
-        if (healthBarText) healthBarText.innerHTML = `${this.ally.getHp()} / ${this.ally.getMaxHp()}`;
+        if (healthBarText) healthBarText.innerHTML = `${unit.getHp()} / ${unit.getMaxHp()}`;
     }
     allyTurn(ally){
 
     }
     enemyTurn(enemy){
-
+        console.log("finelly my turn")
+        const target_ally = Math.floor(Math.random() * this.allies.length);
+        console.log("you will take my hit"+ this.allies[target_ally])
+        this.attackAlly(5,this.allies[target_ally])
     }
 }
 const screen = new createScreen();
@@ -257,19 +267,3 @@ for (let i = 0; i < divs.length; i++) {
     const dataValue = divs[i].getAttribute("index");
     console.log(`Div ${i + 1} data-value: ${dataValue}`);
 }
-
-
-divs.forEach(div => {
-    div.addEventListener("click", () => {
-        console.log("Variable changed to:")
-        myVariable = div.getAttribute("index");
-
-        // Remove 'selected' class from all divs
-        divs.forEach(d => d.classList.remove("selected"));
-
-        // Add 'selected' class to the clicked div
-        div.classList.add("selected");
-
-        console.log("Variable changed to:", myVariable);
-    });
-});

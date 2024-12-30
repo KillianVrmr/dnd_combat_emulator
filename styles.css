@@ -136,3 +136,11 @@ footer {
 .selected {
     border: 2px solid rgb(251, 0, 0);
 }
+.button-group {
+    display: flex; /* Ensures buttons are arranged horizontally */
+    gap: 10px;     /* Optional: Adds spacing between buttons */
+}
+
+button {
+    flex: none;    /* Prevents buttons from stretching in the flex container */
+}

@@ -29,6 +29,7 @@ class createScreen{
         this.initAlly(i);
         }
     }
+
     initAlly(index) {
         try {
             const allyinfo = {id: index}
@@ -49,7 +50,7 @@ class createScreen{
                 <div class="ally_name${index}">${ally.name}</div>
                 <div class="health_bar_ally${index}" style="width: 100%; background-color: #ccc; height: 30px; position: relative; border: 1px solid #000;">
                     <div class="health_bar_progress_ally${index}" style="width: 100%; background-color: green; height: 100%; position: absolute;"></div>
-                    <div class="health_bar_text_ally${index}" style="position: absolute; width: 100%; height: 100%; text-align: center; line-height: 30px; color: white; font-weight: bold;">100%</div>
+                    <div class="health_bar_text_ally${index}" style="position: absolute; width: 100%; height: 100%; text-align: center; line-height: 30px; color: white; font-weight: bold;">${ally.hp}/${ally.hp}</div>
                 </div>
             `;
     
@@ -83,7 +84,7 @@ class createScreen{
             <div class="enemy_name${index}">${monster.name}</div>
             <div class="health_bar_enemy${index}" style="width: 100%; background-color: #ccc; height: 30px; position: relative; border: 1px solid #000;">
                 <div class="health_bar_progress_enemy${index}" style="width: 100%; background-color: red; height: 100%; position: absolute;"></div>
-                <div class="health_bar_text_enemy${index}" style="position: absolute; width: 100%; height: 100%; text-align: center; line-height: 30px; color: white; font-weight: bold;">100%</div>
+                <div class="health_bar_text_enemy${index}" style="position: absolute; width: 100%; height: 100%; text-align: center; line-height: 30px; color: white; font-weight: bold;">${monster.MaxHp}/${monster.MaxHp}</div>
             </div>
             <div class="enemy_descr${index}">${monster.description}</div>
         `;
@@ -123,12 +124,13 @@ class createScreen{
             if(element.id == myVariable){
             console.log(element.id, myVariable, element.name )
         
+        if(element.getHp()>=0){
+
+            
         document.getElementsByClassName("melee").item(0).style.display = "none";
         document.getElementsByClassName("slash").item(0).style.display = "none";
         document.getElementsByClassName("bash").item(0).style.display = "none";
         document.getElementsByClassName("scream").item(0).style.display = "none";
-        if(element.getHp()>=0){
-
         element.setHp(element.getHp()-damage);
         const healthPercentage = (element.getHp() / element.getMaxHp()) * 100;
         this.updateEnemyHealthBar(element)
@@ -136,10 +138,10 @@ class createScreen{
         
         console.log("Aw, I got hurt! I have " + element.getHp() + " HP left!"+element.getMaxHp());
         setTimeout(() => {
-            document.getElementsByClassName("melee").item(0).style.display = "block";
-            document.getElementsByClassName("slash").item(0).style.display = "block";
-            document.getElementsByClassName("bash").item(0).style.display = "block";
-            document.getElementsByClassName("scream").item(0).style.display = "block";
+            document.querySelector(".melee").style.display = "inline-block";
+            document.querySelector(".slash").style.display = "inline-block";
+            document.querySelector(".bash").style.display = "inline-block";
+            document.querySelector(".scream").style.display = "inline-block";
         }, 1000);}
         else{ console.log("i am already dead please stop")}}
        
@@ -192,30 +194,32 @@ class createScreen{
     allyTurn(ally){
 
     }
-    enemyTurn(enemy){
-        console.log("finelly my turn")
-        const target_ally = Math.floor(Math.random() * this.allies.length);
-        console.log("you will take my hit"+ this.allies[target_ally])
-        this.attackAlly(5,this.allies[target_ally])
+    enemyTurn(enemy) {
+        setTimeout(() => {
+            console.log("finally my turn");
+            const target_ally = Math.floor(Math.random() * this.allies.length);
+            console.log("you will take my hit " + this.allies[target_ally]);
+            this.attackAlly(Math.floor(Math.random() * (12 - 3 + 1)) + 8, this.allies[target_ally]);
+        }, 1000); 
     }
 }
 const screen = new createScreen();
 
 meleeButton.addEventListener('click', () => {
     console.log("Melee button clicked!");
-    screen.attackEnemy(7);
+    screen.attackEnemy(10);
 });
 slashButton.addEventListener('click', () => {
     console.log("slash button clicked!");
-    screen.attackEnemy(8);
+    screen.attackEnemy(Math.floor(Math.random() * (12 - 3 + 1)) + 8);
 });
 bashButton.addEventListener('click', () => {
     console.log("bash button clicked!");
-    screen.attackEnemy(9);
+    screen.attackEnemy(Math.floor(Math.random() * (15 - 7 + 1)) + 7);
 });
 screamButton.addEventListener('click', () => {
     console.log("scream button clicked!");
-    screen.attackEnemy(10);
+    screen.attackEnemy(Math.floor(Math.random() * (30 - 7 + 1)));
 });
 
 

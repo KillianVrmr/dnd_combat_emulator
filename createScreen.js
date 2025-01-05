@@ -22,25 +22,30 @@ class createScreen{
         this.allies = [];
         for(let i = 0;i<5;i++){
             const random_monster = availableMonsters[Math.floor(Math.random() * 9)]
-            console.log(random_monster);
             this.initEnemy(random_monster,i)
         };
         for(let i = 0;i<3;i++){
-        this.initAlly(i);
+            this.initAlly(i);
         }
     }
 
-    initAlly(index) {
+    async initAlly(index) {
         try {
-            const allyinfo = {id: index}
-            const ally = createAlly(allyinfo); // Call a method to create an ally
-            this.allies.push(ally); // Add to the allies array
+            const allyInfo = { id: index }; // Create an allyInfo object
+            const ally = await createAlly(allyInfo, "ranger"); // Wait for the ally to be created
     
-            console.log("Your ally is: ", ally.name);
+            if (!ally) {
+                console.error("Failed to create ally.");
+                return;
+            }
+            console.log(ally.name)
+            this.allies.push(ally); // Add the created ally to the allies array
+    
+            console.log("Your ally is:", ally.name);
     
             // Create a container for the new ally
             const allyContainer = document.createElement("div");
-            allyContainer.classList.add("ally_corner"); // Use a class instead of an ID for multiple instances
+            allyContainer.classList.add("ally_corner"); // Use a class for styling
     
             // Fill in the HTML structure
             allyContainer.innerHTML = `
@@ -54,8 +59,12 @@ class createScreen{
                 </div>
             `;
     
-            // Append the new ally container to a parent container
-            const parentContainer = document.getElementById("allies_container"); // Ensure this container exists in your HTML
+            // Append the new ally container to the parent container
+            const parentContainer = document.getElementById("allies_container");
+            if (!parentContainer) {
+                console.error("Parent container with ID 'allies_container' not found.");
+                return;
+            }
             parentContainer.appendChild(allyContainer);
     
             console.log("Current allies list:", this.allies);
@@ -63,6 +72,7 @@ class createScreen{
             console.error("Error initializing ally:", error);
         }
     }
+    
     
     async initEnemy(name,index) {
         // Wait for the promise to resolve and get the monster object
@@ -110,20 +120,17 @@ class createScreen{
         
         // Append the new enemy container to a parent container
         const parentContainer = document.getElementById("enemies_container"); // Ensure this container exists in your HTML
-        console.log(parentContainer)
+        
         parentContainer.appendChild(enemyContainer);
     
-        console.log("Current enemies list:", this.enemies);
     }
     
     
 
     async attackEnemy(damage) {
-        console.log("this should be the selected enemy i attack:"+myVariable)
         this.enemies.forEach(element => {
             if(element.id == myVariable){
-            console.log(element.id, myVariable, element.name )
-        
+           
         if(element.getHp()>=0){
 
             
@@ -136,29 +143,22 @@ class createScreen{
         this.updateEnemyHealthBar(element)
         this.enemyTurn(element)
         
-        console.log("Aw, I got hurt! I have " + element.getHp() + " HP left!"+element.getMaxHp());
         setTimeout(() => {
             document.querySelector(".melee").style.display = "inline-block";
             document.querySelector(".slash").style.display = "inline-block";
             document.querySelector(".bash").style.display = "inline-block";
             document.querySelector(".scream").style.display = "inline-block";
-        }, 1000);}
-        else{ console.log("i am already dead please stop")}}
-       
-        else{console.log("not found it"+ element.id, myVariable, element.name )}
-        
-        });
-    }
+        }, 1000);}}
+    })};
+    
     async attackAlly(damage,ally){
-        console.log(ally.getHp())
         if(ally.getHp()>=0){
 
         ally.setHp(ally.getHp()-damage);
         const healthPercentage = (ally.getHp() /ally.getMaxHp()) * 100;
         this.updateAllyHealthBar(ally)
-        console.log("Aw, I got hurt! I have " + ally.getHp() + " HP left!"+ ally.getMaxHp());
-        }
-        else{ console.log("i am already dead please stop")}}
+       }
+        else{ }}
     
 
     async updateEnemyHealthBar(unit) {
@@ -166,11 +166,9 @@ class createScreen{
         
         const healthBarProgress = document.getElementsByClassName(`health_bar_progress_enemy${unit.id}`)[0];
         const healthBarText = document.getElementsByClassName(`health_bar_text_enemy${unit.id}`)[0];
-        console.log("heatlhbar data"+unit.id,healthBarText,healthBarProgress)
         await new Promise(resolve => setTimeout(resolve, 50)); // Simulated delay
         
         // Update progress bar width
-        console.log(healthPercentage)
         if (healthBarProgress) healthBarProgress.style.width = healthPercentage + "%";
 
         // Update overlay text
@@ -181,11 +179,9 @@ class createScreen{
         
         const healthBarProgress = document.getElementsByClassName(`health_bar_progress_ally${unit.id}`)[0];
         const healthBarText = document.getElementsByClassName(`health_bar_text_ally${unit.id}`)[0];
-        console.log("ally health bar"+ healthBarProgress, healthBarText,unit.id)
-       // new Promise(resolve => setTimeout(resolve, 50)); // Simulated delay
+        // new Promise(resolve => setTimeout(resolve, 50)); // Simulated delay
         
         // Update progress bar width
-        console.log(healthPercentage)
         if (healthBarProgress) healthBarProgress.style.width = healthPercentage + "%";
 
         // Update overlay text
@@ -196,9 +192,7 @@ class createScreen{
     }
     enemyTurn(enemy) {
         setTimeout(() => {
-            console.log("finally my turn");
             const target_ally = Math.floor(Math.random() * this.allies.length);
-            console.log("you will take my hit " + this.allies[target_ally]);
             this.attackAlly(Math.floor(Math.random() * (12 - 3 + 1)) + 8, this.allies[target_ally]);
         }, 1000); 
     }
@@ -206,28 +200,23 @@ class createScreen{
 const screen = new createScreen();
 
 meleeButton.addEventListener('click', () => {
-    console.log("Melee button clicked!");
     screen.attackEnemy(10);
 });
 slashButton.addEventListener('click', () => {
-    console.log("slash button clicked!");
     screen.attackEnemy(Math.floor(Math.random() * (12 - 3 + 1)) + 8);
 });
 bashButton.addEventListener('click', () => {
-    console.log("bash button clicked!");
     screen.attackEnemy(Math.floor(Math.random() * (15 - 7 + 1)) + 7);
 });
 screamButton.addEventListener('click', () => {
-    console.log("scream button clicked!");
-    screen.attackEnemy(Math.floor(Math.random() * (30 - 7 + 1)));
+     screen.attackEnemy(Math.floor(Math.random() * (30 - 7 + 1)));
 });
 
 
     // Select all divs with the class 'selectableDiv'
 const divs = document.querySelectorAll(".enemy_corner");
 
-console.log("amount of divs existing"+divs.length)
+
 for (let i = 0; i < divs.length; i++) {
-    const dataValue = divs[i].getAttribute("index");
-    console.log(`Div ${i + 1} data-value: ${dataValue}`);
-}
+    const dataValue = divs[i].getAttribute("index");}
+    

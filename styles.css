@@ -24,7 +24,12 @@ h1, h2, h3, h4, h5, h6 {
     display: flex; /* Use flexbox layout */
     padding: 10px; /* Optional padding */
     gap: 10px; /* Optional spacing between divs */
-    min-height: 600px;
+    min-height: 200px;
+    border: 40px solid transparent;
+    border-image: url('./images/border.png');
+    border-image-slice:60; /* Define the part of the image used for the border */
+  border-image-repeat: repeat; /* Repeat the border image continuously */
+  border-image-width: 40px;
 }
 #enemy_corner, #ally_corner{
     flex: 1;
@@ -64,6 +69,7 @@ a:hover {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    
 }
 
 /* Cards or Panels */

@@ -26,31 +26,33 @@ class allyCreator{
     }
 }
 
-function createAlly(info){
-    console.log("hey i am creating you ok")
-    const allyInfo = {}
-    fetch('allies.json')
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then((data) => {
-    const allyInfo = data.ranger; // Replace 'ranger' with the desired ally
-    console.log(allyInfo);
-  })
-  .catch((error) => {
-    console.error('Error fetching JSON:', error);
-  });
-  
-  console.log("this is hte info "+ allyInfo.name)
-    if (allyInfo) {
-        const allyInstance = new allyCreator(allyInfo);
-        allyInstance.displayInfo();
-        return allyInstance;
-    } else {
-        console.error("Failed to create ally instance. No data available.");
-        return null;
-    }
+function createAlly(info, allyType) {
+  console.log("Starting to create ally...");
+
+  return fetch('allies.json') // Ensure the path is correct
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const allyInfo = data[allyType]; // Use the provided ally type (e.g., 'ranger', 'wizard')
+      if (!allyInfo) {
+        throw new Error(`Ally type "${allyType}" not found in allies.json`);
+      }
+
+      console.log("Ally info loaded:", allyInfo);
+
+      // Create an ally instance
+      const allyInstance = new allyCreator(allyInfo);
+      allyInstance.displayInfo();
+
+      return allyInstance; // Return the created instance
+    })
+    .catch((error) => {
+      console.error('Error initializing ally:', error);
+      return null; // Handle error gracefully
+    });
 }
+

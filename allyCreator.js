@@ -28,15 +28,23 @@ class allyCreator{
 
 function createAlly(info){
     console.log("hey i am creating you ok")
-    const allyInfo = {
-        id :info.id,
-        name: "test",
-        size: "average",
-        image: "./images/allys/" + "ally"+ ".jpg",
-        type: "no type",
-        hp: 55,
-        attack: 15
-      };
+    const allyInfo = {}
+    fetch('allies.json')
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then((data) => {
+    const allyInfo = data.ranger; // Replace 'ranger' with the desired ally
+    console.log(allyInfo);
+  })
+  .catch((error) => {
+    console.error('Error fetching JSON:', error);
+  });
+  
+  console.log("this is hte info "+ allyInfo.name)
     if (allyInfo) {
         const allyInstance = new allyCreator(allyInfo);
         allyInstance.displayInfo();

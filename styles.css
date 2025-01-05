@@ -134,7 +134,8 @@ footer {
     align-items: center;         /* Center contents horizontally */
 }
 .selected {
-    border: 2px solid rgb(251, 0, 0);
+    border: 2px solid #a37d00;
+    background-color: #514a35;
 }
 .button-group {
     display: flex; /* Ensures buttons are arranged horizontally */

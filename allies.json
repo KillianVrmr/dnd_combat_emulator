@@ -1,0 +1,111 @@
+{
+    "ranger": {
+      "id": "info.id",
+      "name": "Forest Tracker (Ranger)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "dexterity",
+      "hp": 45,
+      "attack": 20
+    },
+    "bard": {
+      "id": "info.id",
+      "name": "Melodic Charmer (Bard)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "charisma",
+      "hp": 40,
+      "attack": 15
+    },
+    "sorcerer": {
+      "id": "info.id",
+      "name": "Arcane Prodigy (Sorcerer)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "magic",
+      "hp": 35,
+      "attack": 25
+    },
+    "barbarian": {
+      "id": "info.id",
+      "name": "Savage Warrior (Barbarian)",
+      "size": "large",
+      "image": "./images/allys/ally.jpg",
+      "type": "strength",
+      "hp": 60,
+      "attack": 30
+    },
+    "cleric": {
+      "id": "info.id",
+      "name": "Holy Protector (Cleric)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "wisdom",
+      "hp": 50,
+      "attack": 20
+    },
+    "druid": {
+      "id": "info.id",
+      "name": "Nature's Guardian (Druid)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "magic",
+      "hp": 45,
+      "attack": 20
+    },
+    "fighter": {
+      "id": "info.id",
+      "name": "Battle Veteran (Fighter)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "strength",
+      "hp": 55,
+      "attack": 25
+    },
+    "monk": {
+      "id": "info.id",
+      "name": "Disciplined Warrior (Monk)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "dexterity",
+      "hp": 45,
+      "attack": 20
+    },
+    "paladin": {
+      "id": "info.id",
+      "name": "Divine Knight (Paladin)",
+      "size": "large",
+      "image": "./images/allys/ally.jpg",
+      "type": "strength",
+      "hp": 60,
+      "attack": 25
+    },
+    "rogue": {
+      "id": "info.id",
+      "name": "Shadow Assassin (Rogue)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "dexterity",
+      "hp": 40,
+      "attack": 30
+    },
+    "warlock": {
+      "id": "info.id",
+      "name": "Dark Caster (Warlock)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "magic",
+      "hp": 35,
+      "attack": 25
+    },
+    "wizard": {
+      "id": "info.id",
+      "name": "Master of Spells (Wizard)",
+      "size": "medium",
+      "image": "./images/allys/ally.jpg",
+      "type": "magic",
+      "hp": 30,
+      "attack": 30
+    }
+  }
+  

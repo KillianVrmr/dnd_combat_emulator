@@ -5,7 +5,9 @@ async function dndApiConnection(url) {
     try{
         const database = await fetch(url);
         const data = await database.json();
-        console.log(data);
+        data.results.forEach((monster,index) => {
+            console.log(monster.name,index);
+          });
         return data
     }
     catch (error) {
@@ -24,5 +26,6 @@ async function monsterApi(monster) {
     }
 }
 
-//dndApiConnection(class_url);
-monsterApi("aboleth");
+// dndApiConnection(monsters_url);
+// monsterApi("aboleth");
+//module.exports = { monsterApi };
